@@ -60,4 +60,261 @@ public class TestCuentaConFixtures extends TestCase {
 		}
 	}
 
+	@Test
+	public void testImporteInvalido1() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(-1);
+	saldoPepe=saldoPepe+(-1);
+	this.cuentaPepe.retiroForzoso(-100, "concepto");
+	saldoPepe = saldoPepe-(-100);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testImporteInvalido2() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(0);
+	saldoPepe=saldoPepe+(0);
+	this.cuentaPepe.retiroForzoso(-100, "concepto");
+	saldoPepe = saldoPepe-(-100);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testNormal3() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(100);
+	saldoPepe=saldoPepe+(100);
+	this.cuentaPepe.retiroForzoso(-100, "concepto");
+	saldoPepe = saldoPepe-(-100);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testNormal4() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(1000);
+	saldoPepe=saldoPepe+(1000);
+	this.cuentaPepe.retiroForzoso(-100, "concepto");
+	saldoPepe = saldoPepe-(-100);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testImporteInvalido5() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(-1);
+	saldoPepe=saldoPepe+(-1);
+	this.cuentaPepe.retiroForzoso(0, "concepto");
+	saldoPepe = saldoPepe-(0);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testImporteInvalido6() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(-1);
+	saldoPepe=saldoPepe+(-1);
+	this.cuentaPepe.retiroForzoso(500, "concepto");
+	saldoPepe = saldoPepe-(500);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testImporteInvalido7() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(-1);
+	saldoPepe=saldoPepe+(-1);
+	this.cuentaPepe.retiroForzoso(1500, "concepto");
+	saldoPepe = saldoPepe-(1500);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testImporteInvalido8() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(0);
+	saldoPepe=saldoPepe+(0);
+	this.cuentaPepe.retiroForzoso(0, "concepto");
+	saldoPepe = saldoPepe-(0);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testNormal9() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(100);
+	saldoPepe=saldoPepe+(100);
+	this.cuentaPepe.retiroForzoso(0, "concepto");
+	saldoPepe = saldoPepe-(0);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testNormal10() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(1000);
+	saldoPepe=saldoPepe+(1000);
+	this.cuentaPepe.retiroForzoso(0, "concepto");
+	saldoPepe = saldoPepe-(0);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testImporteInvalido11() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(0);
+	saldoPepe=saldoPepe+(0);
+	this.cuentaPepe.retiroForzoso(500, "concepto");
+	saldoPepe = saldoPepe-(500);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testImporteInvalido12() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(0);
+	saldoPepe=saldoPepe+(0);
+	this.cuentaPepe.retiroForzoso(1500, "concepto");
+	saldoPepe = saldoPepe-(1500);
+
+	fail("Se esperaba ImporteInvalidoException");
+	}
+	catch (ImporteInvalidoException e) { }
+	catch (Exception e) {
+	fail("Se esperaba ImporteInvalidoException, pero se lanzó " + e);
+	}
+	}
+	@Test
+	public void testNormal13() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(100);
+	saldoPepe=saldoPepe+(100);
+	this.cuentaPepe.retiroForzoso(500, "concepto");
+	saldoPepe = saldoPepe-(500);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testNormal14() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(1000);
+	saldoPepe=saldoPepe+(1000);
+	this.cuentaPepe.retiroForzoso(500, "concepto");
+	saldoPepe = saldoPepe-(500);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+	@Test
+	public void testUnexpectedSituation15() {
+	try {
+	double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(100);
+	saldoPepe=saldoPepe+(100);
+	this.cuentaPepe.retiroForzoso(1500, "concepto");
+	saldoPepe = saldoPepe-(1500);
+	assertTrue(this.cuentaPepe.getSaldo()==-400);
+	//fail("Situación inesperada"); ELIMINAMOS ESTE FAIL YA QUE CON EL RETIRO FORZOSO NOS DEBE PERMITIR HACER LA OPERACIÓN
+	}
+	catch (Exception e) {
+	fail("Situación inesperada");
+	}
+	}
+	@Test
+	public void testNormal16() {
+	    try {
+	        double saldoPepe=1000; double saldoAna=5000;
+	this.cuentaPepe.ingresar(1000);
+	saldoPepe=saldoPepe+(1000);
+	this.cuentaPepe.retiroForzoso(1500, "concepto");
+	saldoPepe = saldoPepe-(1500);
+
+	        assertTrue(this.cuentaPepe.getSaldo()==saldoPepe);
+	        assertTrue(this.cuentaAna.getSaldo()==saldoAna);
+	    }
+	    catch (Exception e) {
+	        fail("Excepción inesperada: " + e);
+	    }
+	}
+
+
 }
