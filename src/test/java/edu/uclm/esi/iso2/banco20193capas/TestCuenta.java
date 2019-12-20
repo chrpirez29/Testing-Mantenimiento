@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import edu.uclm.esi.iso2.banco20193capas.model.Cuenta;
 import edu.uclm.esi.iso2.banco20193capas.model.Manager;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.ClienteNoAutorizadoException;
+import edu.uclm.esi.iso2.banco20193capas.exceptions.ClienteNoEncontradoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaInvalidaException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaSinTitularesException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaYaCreadaException;
@@ -17,6 +19,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
 import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
 import edu.uclm.esi.iso2.banco20193capas.model.Tarjeta;
 import edu.uclm.esi.iso2.banco20193capas.model.TarjetaCredito;
+import edu.uclm.esi.iso2.banco20193capas.model.TarjetaDebito;
 import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
@@ -53,7 +56,193 @@ public class TestCuenta extends TestCase {
 		} catch (SaldoInsuficienteException e) {
 		}
 	}
-	
+	@Test
+	public void testCuentaYaCreada(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		Cliente ana = new Cliente("5678","Ana","Rodriguez");
+		pepe.insert();
+		ana.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaCredito tc;
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e) {
+			fail("Esperaba CuentaYaCreadaException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e) {
+			fail("Esperaba CuentaYaCreadaException");
+		}
+		try {
+			cuentaPepe.addTitular(ana);
+		} catch (CuentaYaCreadaException e) {
+			
+		}
+	}
+	@Test
+	public void testCuentaInvalida(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		pepe.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaCredito tc;
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e) {
+			fail("Esperaba CuentaInvalidaException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e) {
+			fail("Esperaba CuentaYaCreadaException");
+		}
+		try {
+			cuentaPepe.ingresar(1000);
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+		try {
+			cuentaPepe.transferir((long)2,50,"Pago mensual");
+		} catch (CuentaInvalidaException e1) {
+
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba CuentaInvalidaException");
+		} catch (SaldoInsuficienteException e1) {
+			fail("Esperaba CuentaInvalidaException");
+		}
+	}
+	@Test
+	public void testClienteNoEncontrado(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		pepe.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaCredito tc;
+		
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e3) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e2) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+		try {
+			cuentaPepe.ingresar(1000);
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+			try {
+				tc = cuentaPepe.emitirTarjetaCredito("5678", 1000);
+				fail("Esperaba ClienteNoEncontradoException");
+			} catch (ClienteNoEncontradoException e) {
+				
+			} catch (ClienteNoAutorizadoException e) {
+				fail("Esperaba ClienteNoEncontradoException");
+			}
+
+	}
+	@Test
+	public void testClienteNoEncontrado2(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		pepe.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaDebito tc;
+		
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e3) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e2) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+		try {
+			cuentaPepe.ingresar(1000);
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba ClienteNoEncontradoException");
+		}
+			try {
+				tc = cuentaPepe.emitirTarjetaDebito("5678");
+				fail("Esperaba ClienteNoEncontradoException");
+			} catch (ClienteNoEncontradoException e) {
+				
+			} catch (ClienteNoAutorizadoException e) {
+				fail("Esperaba ClienteNoEncontradoException");
+			}
+
+	}
+	@Test
+	public void testClienteNoAutorizado(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		Cliente ana = new Cliente("5678","Ana","Rodriguez");
+		pepe.insert();
+		ana.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaCredito tc;
+		
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e3) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e2) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+		try {
+			cuentaPepe.ingresar(1000);
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+			try {
+				tc = cuentaPepe.emitirTarjetaCredito("5678", 1000);
+				fail("Esperaba ClienteNoAutorizadoException");
+			} catch (ClienteNoEncontradoException e) {
+				fail("Esperaba ClienteNoAutorizadoException");
+			} catch (ClienteNoAutorizadoException e) {
+				
+			}
+
+	}
+	@Test
+	public void testClienteNoAutorizado2(){
+		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
+		Cliente ana = new Cliente("5678","Ana","Rodriguez");
+		pepe.insert();
+		ana.insert();
+		Cuenta cuentaPepe = new Cuenta(1);
+		TarjetaDebito tc;
+		
+		try {
+			cuentaPepe.addTitular(pepe);
+		} catch (CuentaYaCreadaException e3) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+		try {
+			cuentaPepe.insert();
+		} catch (CuentaSinTitularesException e2) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+		try {
+			cuentaPepe.ingresar(1000);
+		} catch (ImporteInvalidoException e1) {
+			fail("Esperaba ClienteNoAutorizadoException");
+		}
+			try {
+				tc = cuentaPepe.emitirTarjetaDebito("5678");
+				fail("Esperaba ClienteNoAutorizadoException");
+			} catch (ClienteNoEncontradoException e) {
+				fail("Esperaba ClienteNoAutorizadoException");
+			} catch (ClienteNoAutorizadoException e) {
+				
+			}
+
+	}
 	@Test
 	public void testCreacionDeUnaCuenta() {
 		try {
