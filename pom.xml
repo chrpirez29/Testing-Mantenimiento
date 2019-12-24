@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+
 	<groupId>edu.uclm.esi.iso2</groupId>
 	<artifactId>banco20193capas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -80,6 +81,9 @@
 		</dependency>
 	</dependencies>
 
+
+
+
 	<build>
 		<finalName>JunitExample</finalName>
 		<plugins>
@@ -136,11 +140,13 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 
 	<reporting>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
@@ -170,6 +176,15 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
+					<rules>
+						<rule
+							ref="category/java/bestpractices.xml/UnusedPrivateMethod">
+							<properties>
+								<property name="ignoredAnnotations"
+									value="java.lang.Deprecated" />
+							</properties>
+						</rule>
+					</rules>
 					<skipEmptyReport>false</skipEmptyReport>
 				</configuration>
 			</plugin>

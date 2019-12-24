@@ -18,7 +18,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.ImporteInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
 
 /**
-* La clase {@code Cuenta} representa una cuenta bancaria, que ha de tener al menos un {@code Cliente} que sea titular.
+* La clase {@code Cuenta} representa una cuenta bancaria, que ha de tener al menos un (@see {@link Cliente}) que sea titular.
 * 
 * 
 */
@@ -76,7 +76,7 @@ public class Cuenta {
 	 * Realiza una retirada de la cuenta
 	 * @param importe	El importe que se retira
 	 * @throws ImporteInvalidoException	Si el importe es menor o igual 0
-	 * @throws SaldoInsuficienteException	Si el importe mayor getSaldo()
+	 * @throws SaldoInsuficienteException	Si el importe es mayor que getSaldo()
 	 */
 	public void retirar(double importe) throws ImporteInvalidoException, SaldoInsuficienteException {
 		this.retirar(importe, "Retirada de efectivo");
