@@ -131,7 +131,7 @@
 										<limit implementation="org.jacoco.report.check.Limit">
 											<counter>COMPLEXITY</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.50</minimum>
+											<minimum>0.75</minimum>
 										</limit>
 									</limits>
 								</rule>
@@ -176,15 +176,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
-					<rules>
-						<rule
-							ref="category/java/bestpractices.xml/UnusedPrivateMethod">
-							<properties>
-								<property name="ignoredAnnotations"
-									value="java.lang.Deprecated" />
-							</properties>
-						</rule>
-					</rules>
 					<skipEmptyReport>false</skipEmptyReport>
 				</configuration>
 			</plugin>
@@ -192,6 +183,9 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<configuration>
+					<excludeFilterFile>src/main/findbugs/findbugs-exclude.xml</excludeFilterFile>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<xmlOutput>true</xmlOutput>
 					<skipEmptyReport>false</skipEmptyReport>
 				</configuration>
 			</plugin>

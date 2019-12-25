@@ -14,12 +14,9 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaInvalidaException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaSinTitularesException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.CuentaYaCreadaException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.ImporteInvalidoException;
-import edu.uclm.esi.iso2.banco20193capas.exceptions.PinInvalidoException;
 import edu.uclm.esi.iso2.banco20193capas.exceptions.SaldoInsuficienteException;
 import edu.uclm.esi.iso2.banco20193capas.model.Cliente;
-import edu.uclm.esi.iso2.banco20193capas.model.Tarjeta;
 import edu.uclm.esi.iso2.banco20193capas.model.TarjetaCredito;
-import edu.uclm.esi.iso2.banco20193capas.model.TarjetaDebito;
 import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
@@ -63,7 +60,6 @@ public class TestCuenta extends TestCase {
 		pepe.insert();
 		ana.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaCredito tc;
 		try {
 			cuentaPepe.addTitular(pepe);
 		} catch (CuentaYaCreadaException e) {
@@ -85,7 +81,6 @@ public class TestCuenta extends TestCase {
 		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
 		pepe.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaCredito tc;
 		try {
 			cuentaPepe.addTitular(pepe);
 		} catch (CuentaYaCreadaException e) {
@@ -116,7 +111,6 @@ public class TestCuenta extends TestCase {
 		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
 		pepe.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaCredito tc;
 		
 		try {
 			cuentaPepe.addTitular(pepe);
@@ -134,7 +128,7 @@ public class TestCuenta extends TestCase {
 			fail("Esperaba ClienteNoEncontradoException");
 		}
 			try {
-				tc = cuentaPepe.emitirTarjetaCredito("5678", 1000);
+				cuentaPepe.emitirTarjetaCredito("5678", 1000);
 				fail("Esperaba ClienteNoEncontradoException");
 			} catch (ClienteNoEncontradoException e) {
 				
@@ -148,7 +142,6 @@ public class TestCuenta extends TestCase {
 		Cliente pepe = new Cliente("12345X", "Pepe", "Pérez");
 		pepe.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaDebito tc;
 		
 		try {
 			cuentaPepe.addTitular(pepe);
@@ -166,7 +159,7 @@ public class TestCuenta extends TestCase {
 			fail("Esperaba ClienteNoEncontradoException");
 		}
 			try {
-				tc = cuentaPepe.emitirTarjetaDebito("5678");
+				cuentaPepe.emitirTarjetaDebito("5678");
 				fail("Esperaba ClienteNoEncontradoException");
 			} catch (ClienteNoEncontradoException e) {
 				
@@ -182,7 +175,6 @@ public class TestCuenta extends TestCase {
 		pepe.insert();
 		ana.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaCredito tc;
 		
 		try {
 			cuentaPepe.addTitular(pepe);
@@ -200,7 +192,7 @@ public class TestCuenta extends TestCase {
 			fail("Esperaba ClienteNoAutorizadoException");
 		}
 			try {
-				tc = cuentaPepe.emitirTarjetaCredito("5678", 1000);
+				cuentaPepe.emitirTarjetaCredito("5678", 1000);
 				fail("Esperaba ClienteNoAutorizadoException");
 			} catch (ClienteNoEncontradoException e) {
 				fail("Esperaba ClienteNoAutorizadoException");
@@ -216,7 +208,6 @@ public class TestCuenta extends TestCase {
 		pepe.insert();
 		ana.insert();
 		Cuenta cuentaPepe = new Cuenta(1);
-		TarjetaDebito tc;
 		
 		try {
 			cuentaPepe.addTitular(pepe);
@@ -234,7 +225,7 @@ public class TestCuenta extends TestCase {
 			fail("Esperaba ClienteNoAutorizadoException");
 		}
 			try {
-				tc = cuentaPepe.emitirTarjetaDebito("5678");
+				cuentaPepe.emitirTarjetaDebito("5678");
 				fail("Esperaba ClienteNoAutorizadoException");
 			} catch (ClienteNoEncontradoException e) {
 				fail("Esperaba ClienteNoAutorizadoException");
